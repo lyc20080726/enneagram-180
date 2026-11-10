@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>九型人格测试（180题）</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f4f6fb;color:#2b2f38;line-height:1.6}
+.wrap{max-width:720px;margin:0 auto;padding:16px 14px 90px}
+.card{background:#fff;border-radius:16px;padding:20px 18px;box-shadow:0 2px 12px rgba(30,40,80,.06);margin-bottom:14px}
+h1{font-size:22px;margin:0 0 6px;color:#1f2d4d}
+h2{font-size:18px;margin:0 0 10px;color:#1f2d4d}
+.sub{color:#6b7280;font-size:13px;margin:0}
+.tip{background:#eef3ff;border-left:4px solid #4f6ef7;padding:10px 12px;border-radius:8px;font-size:14px;color:#3b4459;margin:12px 0}
+.btn{display:block;width:100%;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:600;background:#4f6ef7;color:#fff;margin-top:10px;cursor:pointer}
+.btn.ghost{background:#fff;color:#4f6ef7;border:1px solid #c7d0f5}
+.btn:disabled{background:#c3c9d6;cursor:not-allowed}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #e6e9f0;padding:10px 14px;display:flex;gap:10px;align-items:center;z-index:9}
+.bar .info{flex:1;font-size:13px;color:#6b7280}
+.pbar{height:6px;background:#e6e9f0;border-radius:3px;overflow:hidden;margin-bottom:12px}
+.pbar>i{display:block;height:100%;background:linear-gradient(90deg,#4f6ef7,#8a63f5);width:0;transition:.2s}
+.qno{font-size:13px;color:#8a63f5;font-weight:700;letter-spacing:.5px}
+.qtext{font-size:19px;margin:6px 0 18px;font-weight:500}
+.opts button{display:flex;width:100%;text-align:left;background:#f7f8fc;border:2px solid #e6e9f0;border-radius:12px;padding:14px;margin-bottom:10px;font-size:15px;color:#2b2f38;cursor:pointer;align-items:center;gap:10px}
+.opts button b{width:26px;height:26px;flex:0 0 26px;border-radius:50%;background:#fff;border:1px solid #c7cddb;display:inline-flex;align-items:center;justify-content:center;font-size:13px;line-height:1;color:#6b7280}
+.opts button.on{border-color:#4f6ef7;background:#eef3ff}
+.opts button.on b{background:#4f6ef7;color:#fff;border-color:#4f6ef7}
+.nav{display:flex;justify-content:space-between;margin-top:6px}
+.nav button{background:none;border:none;color:#4f6ef7;font-size:15px;padding:8px 4px;cursor:pointer}
+.nav button:disabled{color:#c3c9d6}
+.score-hero{text-align:center;padding:8px 0 4px}
+.badge{display:inline-flex;align-items:center;justify-content:center;line-height:1;background:linear-gradient(135deg,#4f6ef7,#8a63f5);color:#fff;border-radius:14px;padding:10px 16px;font-size:15px;font-weight:700}
+.score-hero .n{font-size:40px;font-weight:800;color:#1f2d4d;margin:8px 0 0}
+.score-hero .n small{font-size:14px;color:#9aa1b1;font-weight:400}
+.core{font-style:italic;color:#8a63f5;font-size:15px;margin:10px 0 0}
+.row{display:flex;align-items:center;gap:8px;font-size:13px;margin:7px 0;color:#4b5563}
+.row span:first-child{flex:0 0 64px;color:#9aa1b1}
+.rank{margin:8px 0}
+.rank .head{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.rank .track{height:9px;background:#eef0f6;border-radius:5px;overflow:hidden}
+.rank .track i{display:block;height:100%;border-radius:5px;background:#c7d0f5}
+.rank.top .head b{color:#4f6ef7}
+.rank.top .track i{background:linear-gradient(90deg,#4f6ef7,#8a63f5)}
+.sec{margin-top:14px}
+.sec h3{font-size:15px;margin:0 0 6px;color:#1f2d4d}
+.sec p{margin:0;font-size:14px;color:#4b5563}
+.note{font-size:12px;color:#9aa1b1;margin-top:8px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="intro">
+  <div class="card">
+    <h1>九型人格测试</h1>
+    <p class="sub">共 180 题 · 约 20–30 分钟 · 手机即可完成</p>
+    <div class="tip">
+      <b>答题说明</b><br>
+      1. 只选与你真实的思想或行为<b>非常吻合</b>的描述；模棱两可、偶尔出现的不要选。<br>
+      2. 选的是“真实的我”，不是“我喜欢的我”。<br>
+      3. 不要前思后想，第一感觉更准。<br>
+      4. 结果无好坏之分，每种类型都有独特价值。
+    </div>
+    <button class="btn" onclick="start()">开始测试</button>
+  </div>
+</div>
+
+<div id="quiz" class="hide">
+  <div class="card">
+    <div class="pbar"><i id="pfill"></i></div>
+    <div class="qno" id="qno"></div>
+    <div class="qtext" id="qtext"></div>
+    <div class="opts" id="opts">
+      <button data-v="1" onclick="pick(1)"><b>A</b><span>符合我</span></button>
+      <button data-v="0" onclick="pick(0)"><b>B</b><span>不符合 / 不确定</span></button>
+    </div>
+    <div class="nav">
+      <button onclick="go(-1)" id="prev">← 上一题</button>
+      <button onclick="go(1)" id="next">下一题 →</button>
+    </div>
+  </div>
+</div>
+
+<div id="result" class="hide"></div>
+
+</div>
+
+<div class="bar hide" id="bar">
+  <div class="info" id="barinfo"></div>
+  <button class="btn ghost" style="width:auto;margin:0;padding:10px 16px" onclick="finish()">交卷看结果</button>
+</div>
+
+<script>
+const DATA = {"questions": ["当我有困难时，我会试着不让人知道。", "我不想成为一个喜欢批评的人，但很难做到。", "我喜欢当主角，希望得到大家的注意。", "被人误解对我而言是一件十分痛苦的事。", "我喜欢研究宇宙的道理、哲理。", "我常常设想最糟的结果而使自己陷入苦恼中。", "我喜欢让事情呈现得轻松、幽默。", "我是个易于满足的人,极少感到忧虑,几乎常是心平气和的。", "我很善于挺身而出，为自己的需要争持到底。", "我常为事情未能按意想中的方向发展而烦躁不乐。", "我需要在别人生活上占重要席位,我喜欢别人需要我。", "我是一个天生的推销员,说服别人对我来说是一件轻易的事。", "我不善于小组讨论或作简短谈话,我需要很多私人时间和空间。", "我对过去的事有着一份近乎执着的怀恋。", "我常常试探或考验朋友、伴侣的忠诚。", "我善于计划却不善于施行。", "我喜欢独立自主,一切都靠自己。", "身体上的舒适对我非常重要。", "我对现存的总觉不满。", "我做事有效率，也会找捷径，模仿力特强。", "许多人感到很愿意和我接近。", "我常被有象征性的事物吸引。", "当我感到窘促或被人询问实时感受时,我脑里常是一片空白。", "我很难违抗有权者的意见。", "我对于别人和他们做事的动机从不抱很大的怀疑态度。", "我知错能改，但由于执著好强，周围的人还是感觉到压力。", "我喜欢享有完全不用工作的时间。", "别人不能完成他的分内事，会令我失望和愤怒。", "帮助不到别人会让我觉得痛苦。", "我具有策划组织工作的本能而且能使工作顺利完成。", "别人常欠缺那份深度去了解我的感受。", "我讨厌自己貌似愚笨也憎恶被人视为愚笨。", "我似乎比大多数人更懂得享受生命。", "我在作任何抉择前必先搜集多方面资料，确保准确充足。", "当沉浸在工作或我擅长的领域时,别人会觉得我冷酷无情。", "我是很容易说话的人，凡事都有商量余地。", "我的面部表情严肃而生硬。", "我喜欢把别人从困难或尴尬的境况下解救出来。", "我习惯推销自己，对自己的能力十分有信心。", "我认为自己非常的不完善。", "我喜欢从旁观看别人怎样做而自己却不参与。", "我需要较长时间才能做出决定,一般来说,我喜欢行事谨慎。", "生命中没有很多事物是我不能欣赏的。", "我向往掌权的职位，喜欢行使权力。", "即使存在着个别差异,但我仍觉得大多数人是善良的、美好的。", "我常对自己挑剔,期望不断改善自己的缺点,以成为一个完美的人。", "我知道如何让别人喜欢我。", "我外向、精力充沛，喜欢不断追求成就，这使我的自我感觉十分良好。", "我有时很欣赏自己充满权威，有时却又优柔寡断，依赖别人。", "我喜欢把事情安排得井井有条和具有高贵品味，亦很重视仪态。", "我常怀疑自己有否足够的勇气去完成那应做的事。", "我生命中经验过的痛苦和不愉快的事很少。", "我野心勃勃，喜欢挑战和登上高峰的经验。", "一般来说，我不会过分投入任何一件事。", "我经常因少许细节而破坏了整件事。", "我感到助人是应份的,不论我是否喜欢,我也会迫使自己这样做。", "我做事喜欢事先知道自己在进展途上所在的位置。", "我不喜欢想象自己仅只是个平凡人，在很多方面我都是与众不同。", "我较其它人沉默，别人往往要问我在想什么。", "我认为没有严格的规律很难指示人该作什么。", "我很注意自己是否年轻，因为那是快乐的本钱。", "如果周遭的人行为太过分时，我准会让他难堪。", "别人批评我，我也不会回应和辩解，因为我不想发生任何争执与冲突。", "我很容易知道别人的功劳和好处。", "我对别人做的事总是不放心，批评一番后，自己会动手再做。", "我喜欢用进度表、等级表或其它指针显示自己工作进展状况。", "我常常表现得十分忧郁的样子，充满痛苦而且内向。", "当别人请教我一些问题，我会巨细无遗地分析得很清楚。", "我很重视别人对我所持的原则的观点,不论他们是赞成或反对。", "在我生命里不论任何事物都是以最佳状态出现的。", "我是一个很主动甚或具攻击性和自我肯定的人。", "我需要有外来的动力,或刺激我继续工作、行动。", "我脑子里常自我批评，也批评别人。", "我多次感到别人对我的倚赖成了我无法负荷的重担。", "我常因所完成的工作较多而招人妒忌。", "我的忧苦和重压，别人常觉察不到。", "我不喜欢人家问我广泛、笼统的问题。", "我觉得任何事情在采取行动前应先取得有职权人士的批准才好。", "我是个近乎反常的乐观主义者,“理想”对于我来说重于一切。", "我爱依惯例行事，不大喜欢改变。", "我十分抗拒别人干预我的行径,或强把他们的行径加诸我。", "我似乎不太懂得幽默，没有弹性。", "我不觉得自己有许多需要,总是最后才想到自己。", "我重视在人眼前展示一个成功的形象。", "初见陌生人时,我会表现得很冷漠、高傲。", "我通常是等别人来接近我,而不是我去接近他们。", "我常受怀疑所困扰，对存在着的矛盾别具警觉，也很敏感。", "我希望别人对事情看得轻松点。", "我觉得很难把自己品性上较温柔的一面呈露出來，例如温柔、接纳关怀等。", "我可被尊为最公正的仲裁者,因为我认为诉讼双方都是同样好的。", "我重视做事准确无误。", "我有时会觉得别人不欣赏我为他们所做的一切。", "要成功有时要对自己的原则或标准适度协调。", "我很飘忽，常常不知自己下一刻想要什么。", "我很有包容力,彬彬有礼,但跟人的感情互动不深。", "我工作纯为了责任和职务。", "我经常想事情光明的一面而不看生命中黑暗的另一面。", "我处事通常选择没有太多阻力的途径。", "我会极力保护我所爱的人。", "我常感到要和时间竞赛，许多应做的事情仍待完成。", "有时候，我觉得自己是个受害者，别人都尽在利用我。", "我喜欢展露出一个年轻活泼的形象。", "我似乎较其它人更深刻地感受人际关系终断时的那份困扰。", "如果不能完美地表态,我宁愿不说。", "我对一切不清楚的事，一定要问个明白，含糊不清是我最接受不了的。", "我想自己是个怀有赤子童心的人，能与人同乐。", "我要求光明正大，为此不惜与人发生冲突。", "我被动而优柔寡断。", "我待人热情而有耐性。", "我觉得必须对自己每时每刻负责。", "每遇到新事物的出现，我通常会走在活动的最前端。", "我感受特别深刻，并怀疑那些总是很快乐的人。", "我对时间、金钱和所拥有的一切都很吝啬。", "面对威胁时，我一是变得焦虑，一是对抗迎面而来的危险。", "我喜欢把事情“描绘”出來，看看我曾到过那些地方也计划往哪儿去。", "我很有正义感，有时会支持不利的一方。", "我为自己性情稳定而自豪。", "每天晚上，我定要细心反省当日所做的，看是否每件工作都做得妥当。", "帮助别人达到快乐和成功是我重要的成就。", "我是活跃的竞争份子，亦很渴望别人的赞赏。", "我常因感到被遗弃，孤独而饱受煎熬。", "我比任何人更关心自己,更重视如何保护自己和自己的地位。", "我对别人侵犯性的行为很敏感,我不喜欢别人勉强我作任何事。", "我喜欢戏剧性、多彩多姿的生活。", "我想我是个不受限制、不易妥协的人。", "我喜欢以低调处理事情，让别人也因而安稳下来。", "我不但不会说甜言蜜语，而且别人会觉得我唠叨不停。", "付出时，别人若不欣然接纳，我便会挫折感。", "我争强好胜，喜欢跟别人比较。", "我理解小丑笑脸背后隐藏着忧伤,也对这事实很共鸣。", "我声线柔弱，人们常要我说话大声点，而这却使我动怒。", "当我和有权势的人接近时，我一方面感到安全，但另一方面却惧怕他们。", "我对感官的需求特别强烈，喜欢美食、服装、身体的触觉刺激，并纵情享乐。", "我能够坚持己见，甚至在处于下风的时候。", "我总没法记得前次我睡不安宁是多久以前的事。", "我是循规蹈矩的人，秩序对我十分有意义。", "我觉得许多人依赖我的帮忙和慷慨。", "我常常刻意保持兴奋的情绪。", "我有很强的创造天分和想象力，喜欢将事情重新整合。", "我倾向于独自判断并自己解决问题。", "我有时期待别人的指导，有时却忽略别人的忠告径直去做我想做的事。", "我常觉得很多事情都很好玩，很有趣，人生真是快乐。", "我觉得大多数事件都是无关重要的，那又如何需如此紧张让它们牵着走呢?", "我若按自己安排的计划去工作，定然要比按别人为我编排的工作会有更佳成绩。", "“感情”对我来说很重要。", "我极其投入自己的工作，认同工作上的角色，有时甚而忘记“我”是谁。", "我注重小节而效率不高。", "我非常情绪化，一天的喜怒哀乐多变。", "我保留我所拥有的，也收集一些日后可能适用的物资。", "我常常保持警觉。", "我不喜欢要对人尽义务的感觉。", "我很重视现在，我常感到一份催迫，现在应是要行动的一刻。", "我不要求得到很多的注意力。", "我认为要别人爱我，和认同我，我必先样样做到最好。", "我若有一天假期，我常不知道可以为自己做些什么。", "有时我会讲求效率而牺牲完美和原则。", "艺术及艺术性的表达方式对我很重要,他们可以帮助我疏导情绪。", "我常幻想自己是某方面的英雄人物或属于某重要阶层。", "我常静悄悄地进出，不为同室中人觉察。", "我大部分时间都避免卷入严肃的问题。", "在危机发生时，我会挺身而出，控制大局。", "我很容易认同别人所做的事和所知的一切。", "我习惯将自己对外界的不满压抑在心中而非释放出来。", "我觉得因我所作的一切,我堪当在人们心中占重要席位。", "我认为大多数人都不懂得欣赏生命的内在美。", "我认为必须多方面有成就别人才会注意我。", "当我觉我自己处于无大作为的景况时,我会一事不理。", "我衡量他人时，常以他们会否对我构成威胁为据点。", "我的计划目标通常高于我的实际完成。", "我容易感到沮丧和麻木更多于愤怒。", "我很容易觉察到欺骗和羞辱，当我意识到受骗时，我会极度愤怒。", "我对事物的观点似乎紧于事情的“对与错”或“好与坏”。", "我认为自己能滋养别人比任何工作更令我自豪。", "我喜欢告诉别人我所做的事和所知的一切。", "我对大部分的社交集会不太有兴趣，除非那是我熟识的和喜爱的人。", "我感到有些时候自己像是一个被流放的贵族。", "我常担心自由被剥夺，因此不爱作承诺。", "我是一位忠实的朋友和伙伴。", "我感到有必要向别人表示我的不满。", "我温和平静，不自夸，不爱与人竞争。"], "mapping": {"2": 1, "10": 1, "19": 1, "28": 1, "37": 1, "46": 1, "55": 1, "65": 1, "73": 1, "82": 1, "91": 1, "100": 1, "110": 1, "118": 1, "127": 1, "136": 1, "147": 1, "154": 1, "163": 1, "172": 1, "1": 2, "11": 2, "21": 2, "29": 2, "38": 2, "47": 2, "56": 2, "64": 2, "74": 2, "83": 2, "92": 2, "101": 2, "109": 2, "119": 2, "128": 2, "137": 2, "145": 2, "155": 2, "164": 2, "173": 2, "3": 3, "12": 3, "20": 3, "30": 3, "39": 3, "48": 3, "57": 3, "66": 3, "75": 3, "84": 3, "93": 3, "102": 3, "111": 3, "120": 3, "129": 3, "138": 3, "146": 3, "156": 3, "166": 3, "174": 3, "4": 4, "14": 4, "22": 4, "31": 4, "40": 4, "50": 4, "58": 4, "67": 4, "76": 4, "85": 4, "94": 4, "103": 4, "112": 4, "121": 4, "130": 4, "139": 4, "148": 4, "157": 4, "165": 4, "176": 4, "5": 5, "13": 5, "23": 5, "32": 5, "41": 5, "51": 5, "59": 5, "68": 5, "77": 5, "86": 5, "95": 5, "104": 5, "113": 5, "123": 5, "131": 5, "140": 5, "149": 5, "159": 5, "167": 5, "175": 5, "6": 6, "15": 6, "24": 6, "34": 6, "42": 6, "49": 6, "60": 6, "69": 6, "78": 6, "87": 6, "96": 6, "105": 6, "114": 6, "122": 6, "132": 6, "141": 6, "150": 6, "158": 6, "168": 6, "178": 6, "7": 7, "16": 7, "25": 7, "33": 7, "43": 7, "52": 7, "61": 7, "70": 7, "79": 7, "88": 7, "97": 7, "106": 7, "115": 7, "124": 7, "133": 7, "142": 7, "151": 7, "160": 7, "169": 7, "177": 7, "9": 8, "17": 8, "26": 8, "35": 8, "44": 8, "53": 8, "62": 8, "71": 8, "81": 8, "89": 8, "99": 8, "107": 8, "116": 8, "125": 8, "134": 8, "144": 8, "152": 8, "161": 8, "171": 8, "179": 8, "8": 9, "18": 9, "27": 9, "36": 9, "45": 9, "54": 9, "63": 9, "72": 9, "80": 9, "90": 9, "98": 9, "108": 9, "117": 9, "126": 9, "135": 9, "143": 9, "153": 9, "162": 9, "170": 9, "180": 9}, "types": {"1": {"name": "完美型", "en": "Reformer / Perfectionist", "desire": "追求不断进步", "core": "我若不完美，就没有人会爱我。", "traits": "原则性强、不易妥协、常说“应该”与“不应该”、黑白分明、对自己和别人要求高、追求完美、不断改进、感情世界较薄弱。", "gift": "忍耐、有毅力、守承诺、贯彻始终、爱家顾家、守法、有影响力的领袖、光明磊落。", "style": "爱劝勉教导，逃避表达愤怒，相信自己每天有干不完的事。", "growth": "学会放松、允许犯错，把对自己的超高标准稍作调节，多看到事情已经做好的部分。"}, "2": {"name": "全爱型 / 助人型", "en": "Helper", "desire": "追求服侍", "core": "我若不帮助人，就没有人会爱我。", "traits": "渴望被爱与良好关系、甘愿迁就他人、以人为本、要别人觉得需要自己、常忽略自己；很在意别人的感情和需要，热心付出。", "gift": "温和友善、随和、含蓄、慷慨大方、乐善好施。", "style": "爱报告事实，逃避被帮助，忙于助人，否认问题存在。", "growth": "留意自己的需要，学会直接表达请求，付出时不必以对方的回报来肯定自己。"}, "3": {"name": "成就型", "en": "Achiever", "desire": "追求成果", "core": "我若没有成就，就没有人会爱我。", "traits": "好胜心强、喜欢比较、以成就衡量自我价值、着重形象、工作狂、惧怕表达内心感受；希望能被肯定，成为众人的焦点。", "gift": "自信、活力充沛、风趣幽默、处世圆滑、积极进取、形象佳。", "style": "爱数说自己的成就，逃避失败，按着长远目标过活。", "growth": "容许自己以真面目示人，成就之外也看重关系与感受，学会慢下来。"}, "4": {"name": "艺术型 / 自我型", "en": "Individualist", "desire": "追求独特", "core": "我若不是独特的，就没有人会爱我。", "traits": "情绪化、追求浪漫、惧怕被拒绝、觉得别人不明白自己、我行我素；珍惜自己的情感，用最美、最特殊的方式表达，不断自我探索。", "gift": "富有创造力、对美感敏锐、想象力丰富、真诚、深刻。", "style": "爱讲不开心的事，易忧郁、妒忌，生活追寻感觉。", "growth": "别让情绪与现实脱节，多参与当下生活，减少对“别人拥有而我没有”的比较。"}, "5": {"name": "智慧型 / 思想型", "en": "Investigator / Thinker", "desire": "追求知识", "core": "我若没有知识，就没有人会爱我。", "traits": "冷眼看世界、抽离情感、喜欢思考分析、求知欲强但缺乏行动、对物质要求不高、不善表达内心感受；以知识获得安全感。", "gift": "温文儒雅、有学问、条理分明、表达含蓄、专注深入。", "style": "爱观察、批评，把自己抽离，每天有看不完的书。", "growth": "在知识之外也珍视生活经验与身体感受，适度参与而非只做旁观者。"}, "6": {"name": "忠诚型", "en": "Loyalist", "desire": "追求忠心", "core": "我若不顺从，就没有人会爱我。", "traits": "小心谨慎、不轻易相信别人、多疑虑、喜欢群体、为别人尽心尽力、不爱受人注视；既相信权威又容易反权威，性格充满矛盾。", "gift": "忠诚、警觉、谨慎、机智、务实、守规、纪律维持者。", "style": "爱平和讨论，惧怕权威，传统可给予安全感，害怕成就、逃避问题。", "growth": "把忧虑转化为准备而非恐惧，练习信任自己的判断，做决定时少一点犹豫。"}, "7": {"name": "活跃型 / 开朗型", "en": "Adventurer / Enthusiast", "desire": "追求快乐", "core": "我若不带来欢乐，就没有人会爱我。", "traits": "乐观、要新鲜感、追潮流、不喜承受压力、怕负面情绪；想创新、自娱娱人，不断寻找与经验快乐。", "gift": "快乐热心、多才多艺、精力充沛、对玩乐的事熟悉、善带动气氛。", "style": "爱讲自己的经验，喜欢制造开心，人生有太多开心的事等着他。", "growth": "允许自己面对负面情绪与枯燥，做事情有始有终，留意不要沉迷享乐。"}, "8": {"name": "领袖型 / 能力型", "en": "Leader / Challenger", "desire": "追求权力", "core": "我若没有权力，就没有人会爱我。", "traits": "追求权力、讲求实力、不靠他人、有正义感、要话事、喜欢做大事；绝对的行动派，碰到问题马上行动，敢于保护弱者。", "gift": "具魄力、自我肯定、尊重强人、为受压迫者挺身而出、直觉强。", "style": "爱命令，说话大声有威严，爱辩论，靠意志来掌管生活。", "growth": "把力量用于保护而非压制，学会示弱与倾听，留意自己的攻击性给人的压力。"}, "9": {"name": "和平型 / 和谐型", "en": "Peacemaker", "desire": "追求和平", "core": "我若不和善，就没有人会爱我。", "traits": "花长时间作决定、难于拒绝他人、不懂宣泄愤怒；温和、不爱起冲突、不自夸、不爱出风头，想维持和谐与现状，忽视不愉快。", "gift": "温和友善、忍耐、随和、包容、有亲和力、善于调和。", "style": "爱调和，做事缓慢，易懒惰、压抑，生活追寻舒服。", "growth": "练习表达真实想法与不满，主动设定优先事项，别为了和气而迷失自己。"}}};
+const N = DATA.questions.length;
+let ans = new Array(N).fill(null), cur = 0;
+try{ const s = JSON.parse(localStorage.getItem('enn180')||'{}'); if(s.ans&&s.ans.length===N) ans=s.ans; }catch(e){}
+const $ = id => document.getElementById(id);
+function save(){ localStorage.setItem('enn180', JSON.stringify({ans,cur})); }
+function show(id){ ['intro','quiz','result'].forEach(x=>$(x).classList.toggle('hide',x!==id)); $('bar').classList.toggle('hide', id!=='quiz'); }
+function start(){ show('quiz'); render(); }
+function render(){
+  $('pfill').style.width = (ans.filter(x=>x!==null).length/N*100)+'%';
+  $('qno').textContent = '第 '+(cur+1)+' / '+N+' 题';
+  $('qtext').textContent = DATA.questions[cur];
+  document.querySelectorAll('.opts button').forEach(b=>{
+    b.classList.toggle('on', ans[cur]===Number(b.dataset.v));
+  });
+  $('prev').disabled = cur===0;
+  $('next').disabled = cur===N-1;
+  $('barinfo').textContent = '已答 '+ans.filter(x=>x!==null).length+' / '+N+' 题';
+  window.scrollTo({top:0,behavior:'smooth'});
+  save();
+}
+function pick(v){ ans[cur]=v; if(cur<N-1 && v===1){ setTimeout(()=>{ if(cur<N-1){cur++;render();} },180); } else render(); }
+function go(d){ cur=Math.max(0,Math.min(N-1,cur+d)); render(); }
+function finish(){
+  const left = ans.map((x,i)=>x===null?i+1:0).filter(Boolean);
+  if(left.length){ alert('还有 '+left.length+' 题未作答（如第 '+left.slice(0,5).join('、')+' 题…）。\n未答按“不符合”计，确定交卷吗？'); }
+  compute(); show('result'); window.scrollTo({top:0});
+}
+function compute(){
+  const sc = {}; for(let i=1;i<=9;i++) sc[i]=0;
+  ans.forEach((a,i)=>{ if(a===1) sc[DATA.mapping[i+1]]++; });
+  const rank = Object.keys(sc).map(Number).sort((a,b)=>sc[b]-sc[a]||a-b);
+  const main = rank[0], t = DATA.types[main];
+  const max = sc[rank[0]]||1;
+  let h = '<div class="card"><div class="score-hero"><div class="badge">主型号 '+main+' 号 · '+t.name+'</div>'
+    + '<div class="n">'+sc[main]+'<small> / 20 分</small></div>'
+    + '<p class="core">'+t.core+'</p></div>'
+    + '<div class="tip">欲望特质：'+t.desire+'　｜　'+t.en+'</div>';
+  h += '<div class="sec"><h3>九型得分分布</h3>';
+  rank.forEach(i=>{
+    h += '<div class="rank'+(i===main?' top':'')+'"><div class="head"><b>'+i+' 号 '+DATA.types[i].name+'</b><span>'+sc[i]+' 分</span></div>'
+      + '<div class="track"><i style="width:'+(sc[i]/max*100)+'%"></i></div></div>';
+  });
+  h += '</div>';
+  const second = rank[1];
+  if(sc[second]>=sc[main]-2 && sc[second]>=12){
+    h += '<div class="tip">你的 '+second+' 号（'+DATA.types[second].name+'）得分为 '+sc[second]+'，与主型接近，可能存在<b>侧翼</b>影响，可一并参考其解析。</div>';
+  }
+  const f = (label,txt)=> txt? '<div class="row"><span>'+label+'</span><span>'+txt+'</span></div>':'';
+  h += '<div class="sec"><h3>类型解析</h3>'
+    + f('主要特征',t.traits)+f('主要特质',t.gift)+f('生活风格',t.style)+f('成长建议',t.growth)+'</div>';
+  if(second!==main) h += '<div class="sec"><h3>参考：'+second+' 号 '+DATA.types[second].name+'</h3><p>'+DATA.types[second].traits+'</p></div>';
+  h += '<p class="note">本测试基于你勾选的句子按原量表计分（每型 20 题）。结果仅供自我探索参考，并非诊断；状态变化会影响作答。</p>'
+    + '<button class="btn ghost" onclick="localStorage.removeItem(\'enn180\');location.reload()">重新测试</button></div>';
+  $('result').innerHTML = h;
+}
+document.addEventListener('keydown',e=>{ if($('quiz').classList.contains('hide'))return;
+  if(e.key==='a'||e.key==='A')pick(1); if(e.key==='b'||e.key==='B')pick(0);
+  if(e.key==='ArrowRight')go(1); if(e.key==='ArrowLeft')go(-1); });
+$('next').onclick=()=>go(1);
+</script>
+</body>
+</html>
